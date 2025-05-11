@@ -4,4 +4,4 @@
 __pycache__
 song_details/
 *.json
-
+*.txt
