@@ -1,2 +1,7 @@
 .cache
 .env
+.spotify_cache
+__pycache__
+song_details/
+*.json
+
