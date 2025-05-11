@@ -8,6 +8,7 @@ if ROOT not in sys.path:
     sys.path.append(ROOT)
 
 from src.onboard import signin, get_sql_connection, get_top_tracks, get_liked_tracks
+from src.ai_tools import make_playlist_from_prompt
 conn = get_sql_connection()
 
 st.set_page_config(page_title="VibeTune", page_icon="🎵")
@@ -60,4 +61,14 @@ if st.session_state.authenticated:
     if user_input:
         with chat_container:
             st.markdown(f"**You:** {user_input}")
-            st.markdown(f"**VibeTune:** 🤖 _(response goes here)_")
+            with st.spinner("Creating playlist…"):
+                # pass the user query into your AI tool
+                playlist_url = make_playlist_from_prompt(user_input, sp)
+            if playlist_url:
+                st.markdown(
+                    f"**VibeTune:** Your playlist is ready 🎉\n\n"
+                    f"[Open it in Spotify]({playlist_url})"
+                )
+            else:
+                st.markdown("**VibeTune:** ❌ Sorry, I couldn't create a playlist.")
+# ...existing code...
